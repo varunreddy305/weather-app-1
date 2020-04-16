@@ -13,7 +13,7 @@ const httpRequestToGetCoordinates = (location, callback) => {
 				)}.json?access_token=${access_token}&limit=1`
 			)
 			.then(({ data }) => {
-				fileWriter(path.join(__dirname, 'LL.json'), JSON.stringify(data));
+				//fileWriter(path.join(__dirname, 'LL.json'), JSON.stringify(data));
 				const placeLocation = data.features[0].place_name;
 				const place = data.features[0].text;
 				const coordinates = Object.assign({}, data.features[0].center.reverse());
@@ -33,7 +33,7 @@ const httpRequestToGetWeather = (coordinates, place, callback) => {
 	app
 		.get(`http://api.weatherstack.com/current?access_key=${access_key}&query=${coordinates}`)
 		.then(({ data }) => {
-			fileWriter(path.join(__dirname, 'weather.json'), JSON.stringify(data));
+			//fileWriter(path.join(__dirname, 'weather.json'), JSON.stringify(data));
 			const message = `Currently the weather forecast in ${place} is ${data.current.weather_descriptions[0]}. The current temperature is ${data.current.temperature} and it feels like ${data.current.feelslike}`;
 			callback(undefined, { message, place });
 		})
