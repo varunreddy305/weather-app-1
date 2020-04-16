@@ -34,7 +34,7 @@ const httpRequestToGetWeather = (coordinates, place, callback) => {
 		.get(`http://api.weatherstack.com/current?access_key=${access_key}&query=${coordinates}`)
 		.then(({ data }) => {
 			//fileWriter(path.join(__dirname, 'weather.json'), JSON.stringify(data));
-			const message = `Currently the weather forecast in ${place} is ${data.current.weather_descriptions[0]}. The current temperature is ${data.current.temperature} and it feels like ${data.current.feelslike}`;
+			const message = `Currently the weather forecast in ${place} is ${data.current.weather_descriptions[0]}. The current temperature is ${data.current.temperature} and it feels like ${data.current.feelslike}. Wind speed is ${data.current.wind_speed}mph`;
 			callback(undefined, { message, place });
 		})
 		.catch(e => {
