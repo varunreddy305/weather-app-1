@@ -1,0 +1,23 @@
+
+<head>
+    <title>HTML</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    {{>header}}
+
+    <div>
+        <p class="edho">Weather information</p>
+        <form>
+            <input placeholder="location">
+            <button>Search</button>
+        </form>
+        <p id="Weather info"></p>
+        <p id="mess-2"></p>
+    </div>
+    <img src="/images/pic_trulli.jpg" alt="Trulli" width="500" height="333" />
+</body>
+<script type="module" src="../../js/dataFetch.js"></script>
+{{>footer}}
+
