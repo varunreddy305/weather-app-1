@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 		title: 'Weather page',
 		name: 'Varun'
 	});
-}); 
+});
 
 app.get('/weather', (req, res) => {
 	if (!req.query.location) {
@@ -24,19 +24,24 @@ app.get('/weather', (req, res) => {
 			error: "You didn't provide valid location"
 		});
 	}
-	httpRequestToGetCoordinates(req.query.location, (error, { lattfromApi, place, placeLocation } = {}) => {
-		if (error) {
-			return res.send({ error });
-		}
-		httpRequestToGetWeather(lattfromApi, place, (error, { message = 'Please provide valid location' } = {}) => {
-			if (error) throw error;
-			res.send({
-				Weather: message,
-				address: placeLocation,
-				place
+	httpRequestToGetCoordinates(req.query.location)
+		.then(({ lattfromApi, place, placeLocation } = {}) => {
+			httpRequestToGetWeather(lattfromApi, place, (error, { message = 'Please provide valid location' } = {}) => {
+				if (error) {
+					return res.send({
+						error: "You didn't provide valid location"
+					});
+				}
+				res.send({
+					Weather: message,
+					address: placeLocation,
+					place
+				});
 			});
+		})
+		.catch(error => {
+			return res.send({ error });
 		});
-	});
 });
 
 app.get('/about', (req, res) => {
