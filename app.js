@@ -26,18 +26,17 @@ app.get('/weather', (req, res) => {
 	}
 	httpRequestToGetCoordinates(req.query.location)
 		.then(({ lattfromApi, place, placeLocation } = {}) => {
-			httpRequestToGetWeather(lattfromApi, place, (error, { message = 'Please provide valid location' } = {}) => {
-				if (error) {
-					return res.send({
-						error: "You didn't provide valid location"
+			httpRequestToGetWeather(lattfromApi, place)
+				.then(({ message = 'Please provide valid location' }, place) => {
+					res.send({
+						Weather: message,
+						address: placeLocation,
+						place
 					});
-				}
-				res.send({
-					Weather: message,
-					address: placeLocation,
-					place
+				})
+				.catch(error => {
+					return res.send({ error });
 				});
-			});
 		})
 		.catch(error => {
 			return res.send({ error });
